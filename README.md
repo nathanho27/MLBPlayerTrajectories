@@ -100,11 +100,12 @@ Dashboard views include:
 
 ```
 MLBPlayerTrajectories/
+├── MLBData.py
+│  
 ├── notebooks/
-│   ├── 01_data_pull.ipynb
-│   ├── 02_feature_engineering.ipynb
-│   ├── 03_label_construction.ipynb
-│   ├── 04_breakout_model.ipynb
+│   ├── 01_feature_engineering.ipynb
+│   ├── 02_label_construction.ipynb
+│   ├── 03_breakout_model.ipynb
 ├── data/
 │   ├── raw/
 │   ├── processed/
