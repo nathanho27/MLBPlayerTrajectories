@@ -6,7 +6,7 @@ Statcast-based modeling of MLB player performance trajectories, identifying brea
 
 ## Status
 
-Planned (Post-YelpBI)
+## In Progress
 
 ---
 
