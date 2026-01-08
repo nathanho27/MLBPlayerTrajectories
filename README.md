@@ -33,7 +33,7 @@ OPS+ is used strictly for labeling, while model features rely entirely on prior-
 
 ## Data Sources
 
-* **Baseball Savant / Statcast**: Pitch-level tracking data aggregated to the player-season level
+* **Baseball Savant / Statcast (Pybaseball)**: Pitch-level tracking data aggregated to the player-season level
 * **Season-Level OPS+**: Used exclusively for trajectory labeling
 
 ---
@@ -116,7 +116,7 @@ MLBPlayerTrajectories/
 
 ## Planned Work
 
-After completing my current slate of projects, this repository will be initialized with data ingestion, feature engineering, and a first-pass breakout model. Additional trajectory types and dashboard enhancements will be added iteratively.
+This repository will be initialized with data ingestion, feature engineering, and a first-pass breakout model. Additional trajectory types and dashboard enhancements will be added iteratively.
 
 ---
 
