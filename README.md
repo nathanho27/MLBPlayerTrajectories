@@ -1,98 +1,60 @@
 # MLBPlayerTrajectories
 
-Statcast-based modeling of MLB player performance trajectories, identifying breakout, bounceback, decline, and stable profiles with interpretable machine learning and Power BI visualization.
+Season-level modeling of MLB hitter performance trajectories, identifying breakout, bounceback, decline, and stable profiles using interpretable machine learning.
 
 ---
 
 ## Status
 
-## In Progress
+**In Progress**
 
 ---
 
 ## Overview
 
-MLBPlayerTrajectories is a modeling-focused analytics project that studies how MLB hitters transition between different performance states over time. Rather than treating player performance as static, the project frames offense as a **trajectory problem**, using Statcast tracking data to predict future outcomes.
+MLBPlayerTrajectories is a modeling-focused analytics project that studies how MLB hitters transition between different performance states over time. Rather than treating player performance as static, the project frames offense as a **trajectory problem**, using historical season-level performance to forecast future outcomes.
 
-The primary objective is to identify players likely to experience meaningful changes in offensive performance, such as breakouts, bouncebacks, or declines, using only information available before the prediction season. Results are designed to be interpretable and consumable through a lightweight Power BI dashboard.
+The primary objective is to identify players likely to experience meaningful changes in offensive performance, such as breakouts, bouncebacks, or declines, using only information available **prior to the prediction season**.
 
 ---
 
 ## Trajectory Definitions
 
-Player trajectories are defined using **season-level OPS+**, a park- and league-adjusted offensive metric. Labels are constructed using a multi-year context to avoid noise and short-term fluctuations.
+Player trajectories are defined using season-level offensive performance metrics, with labels constructed in a multi-year context to reduce noise and short-term volatility.
 
-* **Breakout**: Transition from average or below-average production to clearly above-average performance
-* **Bounceback**: Return to prior strong performance following a down season
-* **Decline**: Sustained drop from previous offensive levels
-* **Stable**: Performance remains within expected ranges
+- **Breakout**: Transition from average or below-average production to clearly above-average performance  
+- **Bounceback**: Return to prior strong performance following a down season  
+- **Decline**: Sustained drop from previous offensive levels  
+- **Stable**: Performance remains within expected historical ranges  
 
-OPS+ is used strictly for labeling, while model features rely entirely on prior-season Statcast data to prevent leakage.
+Labels are derived from future season outcomes, while all modeling inputs are restricted to prior-season information to prevent information leakage.
 
 ---
 
 ## Data Sources
 
-* **Baseball Savant / Statcast (Pybaseball)**: Pitch-level tracking data aggregated to the player-season level
-* **Season-Level OPS+**: Used exclusively for trajectory labeling
+- **FanGraphs (via pybaseball)**  
+  Season-level hitter statistics including plate appearances, wRC+, ISO, BB%, K%, and related offensive metrics.
 
----
-
-## Feature Engineering
-
-Features are engineered to capture **offensive process**, not results, and are aggregated at the player-season level.
-
-### Contact Quality
-
-* Expected wOBA (xwOBA)
-* Average exit velocity
-* Barrel percentage
-* Hard-hit rate
-* Sweet spot percentage
-
-### Plate Discipline
-
-* Chase rate
-* Whiff rate
-* Zone swing percentage
-* BB% minus K%
-
-### Batted Ball Profile
-
-* Pull rate
-* Fly ball rate
-* Ground ball rate
-* Pull-air rate
-
-### Context & Trends
-
-* Year-over-year deltas in key Statcast metrics
-* Rolling multi-season averages
-* Age and playing-time controls
+Data is accessed programmatically using `pybaseball` and stored locally for reproducibility and downstream analysis.
 
 ---
 
 ## Modeling Approach
 
-Each trajectory type is modeled independently using binary classification.
+The project is structured around a clean backtesting framework:
 
-* Logistic regression for baseline interpretability
-* Tree-based models to capture nonlinear effects
-* Feature importance and SHAP-style explanations
+- Historical seasons are used as model inputs  
+- A future season is held out for evaluation  
+- Trajectory outcomes are predicted without access to future information  
 
-Evaluation emphasizes precision, recall, and ranking quality, reflecting how analysts identify a small set of high-upside or high-risk players.
+Modeling emphasizes interpretability, ranking quality, and practical decision-making rather than production deployment.
 
 ---
 
-## Visualization
+## Data Storage & Workflow
 
-Model outputs are translated into a **Power BI dashboard** designed to support ranking and interpretation rather than raw data exploration.
-
-Dashboard views include:
-
-* Ranked breakout and bounce-back candidates
-* Player-level driver explanations
-* Trajectory outcome comparisons
+Season-level data is staged in **MySQL** to support clean, reproducible analytical transformations and dataset versioning. Python is used for exploration, modeling, and evaluation after data is structured relationally.
 
 ---
 
@@ -103,11 +65,9 @@ MLBPlayerTrajectories/
 ├── MLBData.py
 │
 ├── notebooks/
-│   ├── 01DataExploration.ipynb
-│   ├── 02PlayerSeasonAggregation.ipynb
-│   ├── 03FeatureEngineering.ipynb
-│   ├── 04LabelConstruction.ipynb
-│   ├── 05BreakoutModel.ipynb
+│   ├── 01ExploreData.ipynb
+│   ├── 02BuildPlayerSeason.ipynb
+│   ├── 03MLModel.ipynb
 │
 ├── data/
 │   ├── raw/
@@ -116,16 +76,29 @@ MLBPlayerTrajectories/
 ├── README.md
 
 ```
+## Visualization
+
+Model outputs will be translated into a **Power BI dashboard** designed for interpretation and decision support rather than raw data exploration.
+
+Planned views include:
+- Ranked breakout and bounceback candidates
+- Player-level trajectory summaries
+- Comparisons between predicted and realized outcomes
+
+The visualization layer is intended to make model results accessible to non-technical stakeholders while preserving analytical context.
 
 ---
 
 ## Planned Work
 
-This repository will be initialized with data ingestion, feature engineering, and a first-pass breakout model. Additional trajectory types and dashboard enhancements will be added iteratively.
+- Finalize player-season dataset construction
+- Develop and validate trajectory labels
+- Train and evaluate classification models
+- Build Power BI dashboard for result interpretation
 
 ---
 
 ## Why This Project
 
-While grounded in baseball, this project mirrors real-world analytics problems such as lifecycle modeling, risk identification, and performance forecasting. The emphasis is on clean labeling, interpretable modeling, and clear communication of results rather than production deployment.
+While grounded in baseball, this project mirrors real-world analytics problems such as lifecycle modeling, risk identification, and performance forecasting. The emphasis is on clear problem framing, defensible evaluation, and interpretable modeling decisions rather than heavy data engineering or production systems.
 
