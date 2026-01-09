@@ -205,9 +205,19 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+data/raw/FanGraphsBatting_2022_2025.csv
+data/processed/
+
+# ======================
+# Data (IMPORTANT)
+# ======================
+# Ignore ALL raw and processed data
 data/
+*.csv
 
 # Fangraphs User Credentials
 # Username: nho12
 
 # Password: U2fTrDP90jXT
+
+# MySQL password: Staygold23

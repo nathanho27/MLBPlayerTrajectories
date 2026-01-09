@@ -66,7 +66,7 @@ MLBPlayerTrajectories/
 │
 ├── notebooks/
 │   ├── 01ExploreData.ipynb
-│   ├── 02BuildPlayerSeason.ipynb
+│   ├── 02StagePlayerSeason.ipynb
 │   ├── 03MLModel.ipynb
 │
 ├── data/
