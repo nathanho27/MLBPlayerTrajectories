@@ -42,14 +42,15 @@ Data is accessed programmatically using `pybaseball` and stored locally for repr
 
 ## Modeling Approach
 
-The project is structured around a clean backtesting framework:
+The project follows a clean, forward-looking backtesting framework designed to evaluate how hitter performance changes across seasons:
 
-- Historical seasons are used as model inputs  
-- A future season is held out for evaluation  
-- Trajectory outcomes are predicted without access to future information  
+- Player–season data is structured chronologically to prevent information leakage  
+- Features are derived from prior-season and multi-season trends in offensive process metrics  
+- Future-season performance is held out to evaluate predicted change  
 
-Modeling emphasizes interpretability, ranking quality, and practical decision-making rather than production deployment.
+The modeling task is framed as a regression problem that estimates expected change in offensive performance, rather than directly predicting trajectory labels. Predicted changes are then mapped into interpretable trajectory outcomes such as breakout, decline, bounceback, or stability using analyst-defined thresholds.
 
+Baseline models emphasize interpretability and ranking quality, allowing clear inspection of drivers behind projected improvement or decline. More complex models are treated as extensions rather than the core objective.
 ---
 
 ## Data Storage & Workflow
