@@ -27,7 +27,9 @@ Player trajectories are defined using season-level offensive performance metrics
 - **Decline**: Sustained drop from previous offensive levels  
 - **Stable**: Performance remains within expected historical ranges  
 
-Labels are derived from future season outcomes, while all modeling inputs are restricted to prior-season information to prevent information leakage.
+Trajectory labels are derived from observed changes in future-season outcomes, while
+all model inputs are strictly limited to information available prior to the prediction
+season in order to prevent information leakage.
 
 ---
 
@@ -42,17 +44,24 @@ Data is accessed programmatically using `pybaseball` and stored locally for repr
 
 ## Modeling Approach
 
-The project follows a clean, forward-looking backtesting framework designed to evaluate how hitter performance changes across seasons:
+The project follows a clean, forward-looking backtesting framework designed to
+evaluate how hitter performance changes across seasons.
 
 - Player–season data is structured chronologically to prevent information leakage  
-- Features are derived from prior-season and multi-season trends in offensive process metrics  
-- Future-season performance is held out to evaluate predicted change  
+- Features are derived from prior-season and multi-season trends in offensive
+  process metrics  
+- Future-season performance is held out and used exclusively to evaluate
+  predicted change  
 
-The modeling task is framed as a regression problem that estimates expected change in offensive performance, rather than directly predicting trajectory labels. Predicted changes are then mapped into interpretable trajectory outcomes such as breakout, decline, bounceback, or stability using analyst-defined thresholds.
+The modeling task focuses on estimating the likelihood and direction of future
+performance change rather than directly predicting raw offensive outcomes.
+Observed changes in offensive value are used to define interpretable trajectory
+outcomes such as breakout, decline, bounceback, or stability using analyst-defined
+thresholds.
 
-Baseline models emphasize interpretability and ranking quality, allowing clear inspection of drivers behind projected improvement or decline. More complex models are treated as extensions rather than the core objective.
----
-
+Baseline models emphasize interpretability and ranking quality, allowing clear
+inspection of the drivers behind projected improvement or decline. More complex
+models are treated as extensions rather than the core objective.
 ## Data Storage & Workflow
 
 Season-level data is staged in **MySQL** to support clean, reproducible analytical transformations and dataset versioning. Python is used for exploration, modeling, and evaluation after data is structured relationally.
